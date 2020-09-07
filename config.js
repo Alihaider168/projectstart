@@ -1,4 +1,5 @@
 exports.App = {
+  testData: process.env.NODE_ENV || "not found env",
   MongoServerIp: "mongodb://localhost:27017/arslanApps",
   server: {
     ip: "http://127.0.0.1",

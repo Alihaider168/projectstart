@@ -22,37 +22,38 @@ app.get("*", (req, res) => {
   return res.status(config.App.httpStatuses.NOT_FOUND).json({
     status: "ROUTE_NOT_FOUND",
     code: config.App.httpStatuses.NOT_FOUND,
+    data: config.App.testData,
   });
 });
 
 async function connect() {
   try {
     // connection with Azure
-    await mongoose.connect(
-      "mongodb://" +
-        config.App.cosmoDb.COSMOSDB_HOST +
-        ":" +
-        config.App.cosmoDb.COSMOSDB_PORT +
-        "/" +
-        config.App.cosmoDb.COSMOSDB_DBNAME +
-        "?ssl=true&replicaSet=globaldb",
-      {
-        auth: {
-          user: config.App.cosmoDb.COSMODDB_USER,
-          password: config.App.cosmoDb.COSMOSDB_PASSWORD,
-        },
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        retrywrites: false,
-      }
-    );
+    // await mongoose.connect(
+    //   "mongodb://" +
+    //     config.App.cosmoDb.COSMOSDB_HOST +
+    //     ":" +
+    //     config.App.cosmoDb.COSMOSDB_PORT +
+    //     "/" +
+    //     config.App.cosmoDb.COSMOSDB_DBNAME +
+    //     "?ssl=true&replicaSet=globaldb",
+    //   {
+    //     auth: {
+    //       user: config.App.cosmoDb.COSMODDB_USER,
+    //       password: config.App.cosmoDb.COSMOSDB_PASSWORD,
+    //     },
+    //     useNewUrlParser: true,
+    //     useUnifiedTopology: true,
+    //     retrywrites: false,
+    //   }
+    // );
 
     // connection with local db
-    // await mongoose.connect(config.App.MongoServerIp, {
-    //   useNewUrlParser: true,
-    //   useUnifiedTopology: true,
-    //   retrywrites: false,
-    // });
+    await mongoose.connect(config.App.MongoServerIp, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      retrywrites: false,
+    });
     console.log("DB_CONNECTED_SUCCESSFULLY");
   } catch (err) {
     console.log(err);
